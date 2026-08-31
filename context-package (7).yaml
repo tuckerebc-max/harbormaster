@@ -1,0 +1,29 @@
+name: ContextPackage
+description: Reproducible context assembled for a receiving role or workbench.
+required:
+  - id
+  - work_item_id
+  - completeness
+  - purpose
+  - scope
+  - provenance
+  - boundaries
+properties:
+  id: {type: string}
+  work_item_id: {type: string}
+  project_id: {type: string}
+  completeness: {type: string, enum: [minimal, execution-ready, evaluation-ready, deployment-ready, incomplete]}
+  purpose: {type: string}
+  scope: {type: object}
+  design_record: {type: object}
+  project_memory: {type: array}
+  sources: {type: array}
+  standards: {type: array}
+  examples: {type: array}
+  workbench: {type: object}
+  tools: {type: array}
+  evaluation: {type: object}
+  coordination: {type: object}
+  boundaries: {type: array}
+  missing_context: {type: array}
+  provenance: {type: object}

@@ -1,0 +1,21 @@
+name: Escalation
+description: Bounded request for a decision, capacity, policy interpretation, or recovery action.
+required:
+  - id
+  - work_item_id
+  - reason
+  - target
+  - requested_decision
+  - evidence
+properties:
+  id: {type: string}
+  work_item_id: {type: string}
+  project_id: {type: string}
+  reason: {type: string, enum: [blocked, stalled, policy_unclear, capacity_shortage, evaluator_failure, conflicting_records, scope_change, security_sensitive, lost_state]}
+  severity: {type: string, enum: [critical, high, medium, low]}
+  target: {type: string}
+  requested_decision: {type: string}
+  evidence: {type: array}
+  options: {type: array}
+  deadline: {type: string}
+  status: {type: string, enum: [open, acknowledged, resolved, superseded]}

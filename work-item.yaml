@@ -1,0 +1,28 @@
+name: WorkItem
+description: Addressable work entering or moving through the Navy Yard Work Graph.
+required:
+  - id
+  - title
+  - source
+  - state
+  - project_id
+  - provenance
+properties:
+  id: {type: string}
+  title: {type: string}
+  source: {type: string, enum: [linear, notion, hermes, beads, observation, external]}
+  source_record_id: {type: string}
+  project_id: {type: string}
+  linear_issue_id: {type: string}
+  linear_project_id: {type: string}
+  notion_page_id: {type: string}
+  bead_id: {type: string}
+  state:
+    type: string
+    enum: [queued, triaging, awaiting_context, awaiting_design, ready, reserved, dispatched, in_progress, blocked, evaluating, awaiting_decision, complete, deployed, harvested, cancelled, superseded]
+  work_type: {type: string}
+  priority: {type: string, enum: [critical, high, normal, low, deferred]}
+  desired_outcome: {type: string}
+  dependencies: {type: array}
+  sensitivity: {type: string, enum: [public, internal, confidential, restricted]}
+  provenance: {type: object}

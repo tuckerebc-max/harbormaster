@@ -1,0 +1,42 @@
+id: rd-hm-0001
+work_item_id: wi-architecture-0007
+project_id: project-navy-yard
+policy_version: routing-policy-0.1
+claim: The architecture package should route to the Architecture Workbench with an Architect-led design phase before implementation.
+evidence:
+  - source: linear
+    id: LIN-207
+    fact: The project is a committed Navy Yard architecture initiative.
+  - source: notion
+    id: notion-design-record-41
+    fact: The request requires claims, evidence, warrants, boundaries, and evaluator requirements.
+  - source: fleet
+    id: fleet-snapshot-2026-08-31T05:00Z
+    fact: A Codex resource is available for design work.
+  - source: ats
+    id: ats-run-architecture-12
+    fact: The selected resource has comparable evidence for specification work.
+warrant: The work is consequential design work, so the Architecture Workbench and Architect must establish the design record before production dispatch.
+boundaries:
+  - Harbormaster routes and does not author the design.
+  - Linear remains the commitment ledger.
+  - Notion remains the durable design-record authority.
+decision:
+  district: navy-yard
+  workbench: architecture
+  bosun: bosun-navy-yard
+  resources:
+    - fleet_resource_id: codex-account-01
+      role: design-assist
+  phase: design-first
+alternatives_considered:
+  - route: direct implementation
+    rejected_because: No approved design record exists.
+next_action:
+  action: Request Architect design record and context package completion.
+  owner: architect
+  event: design.approved
+confidence: high
+uncertainty: []
+status: proposed
+created_at: '2026-08-31T05:00:00Z'

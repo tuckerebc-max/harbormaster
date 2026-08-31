@@ -1,0 +1,21 @@
+case_id: no-capacity
+kind: capacity
+work_item:
+  id: wi-capacity-001
+  title: Run a deployment evaluation
+  project_id: project-release-001
+  state: ready
+  source: hermes
+  priority: high
+  sensitivity: restricted
+  dependencies: []
+fleet:
+  offers:
+    - resource_id: codex-account-01
+      availability: throttled
+    - resource_id: gemini-account-01
+      availability: unavailable
+expected:
+  result: hold
+  reason: awaiting_capacity
+  next_action: create_capacity_escalation

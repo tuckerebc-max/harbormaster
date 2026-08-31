@@ -1,0 +1,20 @@
+name: CapabilityHarvest
+description: Durable record of what the Navy Yard learned from completed work.
+required:
+  - id
+  - project_id
+  - artifact_outcome
+  - capability_outcome
+  - destinations
+properties:
+  id: {type: string}
+  project_id: {type: string}
+  artifact_outcome: {type: object}
+  capability_outcome: {type: object}
+  routing_lessons: {type: array}
+  context_lessons: {type: array}
+  evaluator_results: {type: array}
+  resource_lessons: {type: array}
+  proposed_changes: {type: array}
+  destinations: {type: array}
+  provenance: {type: object}

@@ -1,0 +1,24 @@
+case_id: stalled-lane
+kind: monitoring
+work_item:
+  id: wi-stalled-001
+  title: Refactor API client
+  project_id: project-client-002
+  state: in_progress
+  source: beads
+  priority: normal
+  sensitivity: internal
+  dependencies: []
+events:
+  - type: work.started
+    at: '2026-08-31T01:00:00Z'
+  - type: heartbeat
+    at: '2026-08-31T01:10:00Z'
+    evidence: reported
+  - type: heartbeat
+    at: '2026-08-31T04:30:00Z'
+    evidence: none
+expected:
+  result: recover
+  reason: stalled
+  first_action: inspect_last_credible_progress

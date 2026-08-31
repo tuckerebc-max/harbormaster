@@ -1,0 +1,27 @@
+id: skill.harbormaster
+version: 0.1.0
+name: harbormaster
+display_name: Harbormaster
+purpose: Route and coordinate work across the Navy Yard.
+entrypoint: SKILL.md
+role_specification: references/role-specification.md
+references:
+  - references/routing-policy.md
+  - references/context-assembly.md
+  - references/cross-system-contract.md
+  - references/monitoring-recovery.md
+  - references/closeout-learning.md
+  - references/github-exemplars.md
+schemas:
+  - schemas/work-item.yaml
+  - schemas/context-package.yaml
+  - schemas/routing-decision.yaml
+  - schemas/capacity-offer.yaml
+  - schemas/progress-evidence.yaml
+  - schemas/escalation.yaml
+  - schemas/capability-harvest.yaml
+activation:
+  implicit: true
+  exclusions:
+    - specialist-production
+    - project-level-task-execution

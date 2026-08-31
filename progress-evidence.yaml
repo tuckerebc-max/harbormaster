@@ -1,0 +1,20 @@
+name: ProgressEvidence
+description: Evidence that a work item or project has actually moved.
+required:
+  - id
+  - work_item_id
+  - evidence_type
+  - observed_at
+  - source
+properties:
+  id: {type: string}
+  work_item_id: {type: string}
+  project_id: {type: string}
+  evidence_type: {type: string, enum: [state_transition, artifact, diff, test, evaluation, dependency_resolved, discovery, decision, handoff, environment_setup, blocker, heartbeat]}
+  summary: {type: string}
+  artifact_refs: {type: array}
+  evaluator_refs: {type: array}
+  observed_at: {type: string}
+  actor: {type: string}
+  source: {type: string}
+  credibility: {type: string, enum: [verified, reported, inferred, disputed]}

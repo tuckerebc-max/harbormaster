@@ -1,0 +1,50 @@
+id: cp-hm-0001
+work_item_id: wi-architecture-0007
+project_id: project-navy-yard
+completeness: execution-ready
+purpose: Build the Harbormaster role and loadable skill package for the Navy Yard.
+scope:
+  in_scope:
+    - role specification
+    - portable skill instructions
+    - federated Work Graph contracts
+    - evaluators and fixtures
+  out_of_scope:
+    - live Linear or Notion writes
+    - provider-specific implementation
+design_record:
+  notion_page_id: notion-design-record-41
+  required: true
+project_memory:
+  - id: hm-boundary-01
+    fact: Harbormaster routes across projects; Bosun owns one project's tempo.
+sources:
+  - id: navy-yard-beads-memo-2026-08-31
+    authority: user-supplied architecture memo
+standards:
+  - id: navy-yard-constitution-v0.1
+examples:
+  - id: gastown-beads-routing-patterns
+workbench:
+  district: software-factory
+  name: architecture
+tools:
+  - markdown
+  - yaml
+evaluation:
+  harness: harbormaster-routing-v0.1
+  evaluators:
+    - routing-fit
+    - context-completeness
+    - boundary-compliance
+coordination:
+  bosun: bosun-navy-yard
+  dependencies: []
+  escalation: admiral
+boundaries:
+  - no silent external mutation
+  - no invented live capacity
+missing_context: []
+provenance:
+  assembled_by: hermes
+  assembled_at: '2026-08-31T05:00:00Z'

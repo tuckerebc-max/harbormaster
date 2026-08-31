@@ -1,0 +1,14 @@
+case_id: ambiguous-intake
+kind: intake
+work_item:
+  id: wi-ambiguous-001
+  title: Make the system better
+  project_id: project-unknown
+  state: queued
+  source: external
+  priority: normal
+  sensitivity: internal
+  dependencies: []
+expected:
+  result: request_clarification
+  reason: insufficient_purpose_and_scope

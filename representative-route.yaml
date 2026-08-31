@@ -1,0 +1,15 @@
+case_id: representative-route
+kind: routing
+work_item:
+  id: wi-feature-001
+  title: Add authenticated project dashboard
+  project_id: project-client-001
+  state: triaging
+  source: linear
+  priority: high
+  sensitivity: internal
+  dependencies: [wi-design-001]
+expected:
+  result: hold
+  reason: awaiting_design
+  next_owner: architect

@@ -1,0 +1,31 @@
+name: RoutingDecision
+description: Evidence-backed decision about where work should go and what happens next.
+required:
+  - id
+  - work_item_id
+  - claim
+  - evidence
+  - warrant
+  - boundaries
+  - decision
+  - next_action
+properties:
+  id: {type: string}
+  work_item_id: {type: string}
+  project_id: {type: string}
+  policy_version: {type: string}
+  claim: {type: string}
+  evidence: {type: array}
+  warrant: {type: string}
+  boundaries: {type: array}
+  decision:
+    type: object
+    required: [district, workbench, bosun]
+  alternatives_considered: {type: array}
+  next_action: {type: object}
+  capacity_snapshot_id: {type: string}
+  ats_evidence_refs: {type: array}
+  confidence: {type: string, enum: [high, medium, low, unknown]}
+  uncertainty: {type: array}
+  status: {type: string, enum: [proposed, accepted, held, dispatched, superseded, rejected]}
+  created_at: {type: string}

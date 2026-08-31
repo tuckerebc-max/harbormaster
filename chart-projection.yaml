@@ -1,0 +1,32 @@
+chart_id: chart-harbormaster-0001
+projection_for: harbormaster
+as_of: '2026-08-31T05:00:00Z'
+source_records:
+  - linear_project_id: LIN-PROJ-01
+    project: Navy Yard architecture
+    state: in_progress
+    bosun: bosun-navy-yard
+    ready_work: 3
+    blocked_work: 1
+    capacity: limited
+    risk: medium
+  - linear_project_id: LIN-PROJ-02
+    project: ANRI textbook architecture
+    state: awaiting_decision
+    bosun: bosun-anri
+    ready_work: 1
+    blocked_work: 0
+    capacity: available
+    risk: low
+relationships:
+  - from: LIN-PROJ-01
+    relation: competes_for
+    to: codex-account-01
+  - from: wi-architecture-0007
+    relation: depends_on
+    to: notion-design-record-41
+next_actions:
+  - work_item_id: wi-architecture-0007
+    action: complete design record
+  - work_item_id: wi-capacity-0002
+    action: request Fleet reservation

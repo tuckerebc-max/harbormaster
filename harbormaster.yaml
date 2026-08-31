@@ -1,0 +1,55 @@
+id: role.harbormaster
+version: 0.1.0
+name: Harbormaster
+institution: Navy Yard
+type: cross-project-operational-router
+core_question: Where should this work go, with what context and capacity, and what should happen next?
+owns:
+  - work-pile-visibility
+  - triage-and-routing
+  - context-package-coordination
+  - district-and-workbench-selection
+  - fleet-capacity-coordination
+  - bosun-coordination
+  - dependency-and-priority-preservation
+  - stalled-lane-detection
+  - rerouting-and-escalation
+  - cross-system-reconciliation
+  - capability-harvest-completion
+does_not_own:
+  - yard-strategy
+  - design-intent
+  - specialist-production
+  - project-level-tempo
+  - fleet-inventory
+  - empirical-capability-evidence
+  - institutional-memory-stewardship
+interfaces:
+  - role: admiral
+    relation: receives-strategic-priority-and-reports-institutional-flow
+  - role: architect
+    relation: gates-consequential-work-with-design-record
+  - role: bosun
+    relation: assigns-one-accountable-project-tempo-owner
+  - role: fleet-manager
+    relation: requests-live-capacity-and-reservations
+  - role: ats
+    relation: consumes-empirical-capability-evidence
+  - role: conductor
+    relation: hands-off-repeatable-specialist-composition
+  - role: lighthouse-keeper
+    relation: supplies-legible-institutional-signal
+systems:
+  linear: commitment-ledger
+  notion: institutional-memory
+  hermes: control-plane
+  beads: bounded-execution-ledger
+  superpowers: execution-method
+  chart: navigation-projection
+required_records:
+  - WorkItem
+  - ContextPackage
+  - RoutingDecision
+  - ProgressEvidence
+  - Escalation
+  - CapabilityHarvest

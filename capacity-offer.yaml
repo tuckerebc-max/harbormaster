@@ -1,0 +1,23 @@
+name: CapacityOffer
+description: Fleet's current statement of usable capacity and constraints.
+required:
+  - id
+  - resource_id
+  - availability
+  - observed_at
+  - source
+properties:
+  id: {type: string}
+  resource_id: {type: string}
+  provider: {type: string}
+  account_or_surface: {type: string}
+  availability: {type: string, enum: [available, limited, reserved, throttled, unavailable, unknown]}
+  concurrency: {type: integer}
+  window: {type: object}
+  permissions: {type: array}
+  cost_class: {type: string}
+  switching_cost: {type: string}
+  constraints: {type: array}
+  observed_at: {type: string}
+  expires_at: {type: string}
+  source: {type: string}

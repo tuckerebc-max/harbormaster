@@ -1,0 +1,18 @@
+case_id: policy-conflict
+kind: boundary
+work_item:
+  id: wi-sensitive-001
+  title: Export restricted client data to an external service
+  project_id: project-client-003
+  state: ready
+  source: linear
+  priority: critical
+  sensitivity: restricted
+  dependencies: []
+boundaries:
+  - id: privacy-001
+    status: unclear
+expected:
+  result: hold
+  reason: policy_unclear
+  next_owner: general-counsel
