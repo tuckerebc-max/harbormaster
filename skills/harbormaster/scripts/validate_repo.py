@@ -72,8 +72,12 @@ def validate_skill(repo: Path, errors: list[str]) -> None:
     frontmatter = load_yaml_from_text(match.group(1), errors)
     if not isinstance(frontmatter, dict):
         errors.append("SKILL.md frontmatter is not a mapping")
-    elif frontmatter.get("name") != "harbormaster":
-        errors.append("SKILL.md name must be harbormaster")
+    else:
+        if frontmatter.get("name") != "harbormaster":
+            errors.append("SKILL.md name must be harbormaster")
+        description = frontmatter.get("description")
+        if not isinstance(description, str) or not description.strip():
+            errors.append("SKILL.md description must be a non-empty string")
     if "TODO" in text:
         errors.append("SKILL.md contains an unfinished TODO")
     for concept in REQUIRED_CONCEPTS:
@@ -113,10 +117,27 @@ def validate_fixture(path: Path, errors: list[str]) -> None:
         if key not in value:
             errors.append(f"fixture {path.name} is missing {key}")
     work_item = value.get("work_item")
-    if isinstance(work_item, dict):
+    if not isinstance(work_item, dict):
+        errors.append(f"fixture {path.name}.work_item must be a mapping")
+    else:
         for key in ("id", "title", "project_id", "state", "source", "priority", "sensitivity"):
             if key not in work_item:
                 errors.append(f"fixture {path.name}.work_item is missing {key}")
+
+
+def validate_manifest_path(package: Path, field: str, relative, errors: list[str]) -> None:
+    if not isinstance(relative, str) or not relative.strip():
+        errors.append(f"manifest {field} must contain a non-empty file path")
+        return
+    try:
+        path = Path(relative)
+        target = (package / path).resolve()
+        if path.is_absolute() or not target.is_relative_to(package.resolve()):
+            errors.append(f"manifest {field} must be package-relative: {relative}")
+        elif not target.is_file():
+            errors.append(f"manifest {field} points to missing file: {relative}")
+    except (OSError, ValueError, RuntimeError):
+        errors.append(f"manifest {field} contains an invalid file path: {relative!r}")
 
 
 def main() -> int:
@@ -138,20 +159,29 @@ def main() -> int:
         validate_skill(repo, errors)
 
     role = load_yaml(repo / "roles/harbormaster.yaml", errors)
-    if isinstance(role, dict):
+    if not isinstance(role, dict):
+        errors.append("roles/harbormaster.yaml must be a mapping")
+    else:
         for key in ("id", "version", "owns", "does_not_own"):
             if key not in role:
                 errors.append(f"roles/harbormaster.yaml is missing {key}")
 
     manifest = load_yaml(package / "manifest.yaml", errors)
-    if isinstance(manifest, dict):
-        for key in ("id", "version", "entrypoint", "references", "schemas", "examples"):
+    if not isinstance(manifest, dict):
+        errors.append("skills/harbormaster/manifest.yaml must be a mapping")
+    else:
+        for key in ("id", "version", "entrypoint", "role_specification", "references", "schemas", "examples"):
             if key not in manifest:
                 errors.append(f"skills/harbormaster/manifest.yaml is missing {key}")
+        for field in ("entrypoint", "role_specification"):
+            validate_manifest_path(package, field, manifest.get(field), errors)
         for field in ("references", "schemas", "examples"):
-            for rel in manifest.get(field, []):
-                if not (package / rel).is_file():
-                    errors.append(f"manifest {field} points to missing file: {rel}")
+            paths = manifest.get(field)
+            if not isinstance(paths, list):
+                errors.append(f"manifest {field} must be a list of file paths")
+                continue
+            for relative in paths:
+                validate_manifest_path(package, field, relative, errors)
 
     for filename in SCHEMAS:
         validate_schema(repo, filename, errors)

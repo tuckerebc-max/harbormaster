@@ -5,9 +5,9 @@ manager. It answers:
 
 > Where should this work go, with what context and capacity, and what should happen next?
 
-The canonical package is now organized by responsibility. The previous
-flattened upload, numbered copies, and ambiguous filename are preserved under
-`legacy/flattened-upload/` for provenance; they are not active interfaces.
+The canonical package is organized by responsibility. Numbered copies and the
+ambiguous filename from the former flattened upload are preserved under
+`legacy/flattened-upload/`; the full original source remains in Git history.
 
 ## Canonical package boundary
 
@@ -53,9 +53,10 @@ authority for those decisions.
 
 ## Validation
 
-From the repository root:
+From the repository root, using Python 3.9 or later:
 
 ```text
+python -m pip install -r requirements.txt
 python skills/harbormaster/scripts/validate_repo.py .
 python -m unittest discover -s tests -v
 ```
@@ -64,8 +65,18 @@ These checks establish structural and fixture coherence only. They do not
 authenticate connectors, reserve capacity, dispatch live work, or certify a
 production control plane.
 
+## Install the skill
+
+Copy the entire `skills/harbormaster/` directory into the target harness's
+skill directory. Keep its `agents`, `references`, `schemas`, and `examples`
+companions together. The validator script checks a full source repository;
+an installed skill folder alone does not contain the repository fixtures and
+role records required for that check.
+
 ## Status
 
-This branch is a proposed rehabilitation of the source at commit
-`f75bbe034c6424f46058e05aad8c1b7a079ead9b`. It is not merged, pushed, or
-activated.
+Version `0.1.0` specifies the routing contract and provides local package
+validation. Live connector adapters and an event-replay routing harness
+remain future work. The recovery retains the original upload at
+`f75bbe034c6424f46058e05aad8c1b7a079ead9b` and the August 31 rehabilitation at
+`dc4e8b75442acbf5704a898ca292854c197b53c0` in its history.

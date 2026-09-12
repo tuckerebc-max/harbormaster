@@ -23,6 +23,7 @@ schemas:
 examples:
   - examples/context-package.yaml
   - examples/routing-decision.yaml
+  - examples/chart-projection.yaml
 activation:
   implicit: true
   exclusions:

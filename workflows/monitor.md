@@ -17,7 +17,7 @@ Read events and records for:
 
 For each material exception, determine whether it is waiting, blocked,
 stalled, failing, festering, or lost. Select the smallest justified response
-from the recovery ladder in `references/monitoring-recovery.md`.
+from the [recovery ladder](../skills/harbormaster/references/monitoring-recovery.md).
 
 ## Communicate
 
