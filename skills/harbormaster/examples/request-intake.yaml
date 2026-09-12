@@ -1,0 +1,43 @@
+description: Three proportionate request-intake walkthroughs for Harbormaster.
+route_examples:
+  - id: simple-answer
+    request_class: simple-answer
+    intended_result: Answer the supplied question.
+    authorized_surfaces:
+      - supplied context
+      - read-only local file when needed
+    acceptance: A direct answer identifies the controlling fact and limits.
+    handoff:
+      next_receiver: requester
+      state: answered
+      work_item_required: false
+      review_required: false
+  - id: bounded-code-repair
+    request_class: implementation
+    intended_result: Repair one failing test without changing public behavior.
+    authorized_surfaces:
+      - exact repository and revision
+      - isolated write scope when supported and warranted
+    acceptance: The named test passes, related checks pass, and behavior is preserved.
+    handoff:
+      builder_seat: one accountable builder
+      reviewer_seat: one independent reviewer
+      next_receiver: requester or assigned integrator
+      state: partial
+      source_revision: exact-source-revision
+      implementation_evidence: command-and-result-reference
+      review_evidence: independent-review-reference
+      repository_state: unknown
+      work_item_required: true
+  - id: authority-conflict
+    request_class: read-only-inquiry
+    intended_result: Interpret which role controls approval precedence.
+    authorized_surfaces:
+      - supplied role records
+      - read-only package documentation
+    acceptance: Conflicting citations are preserved for a Parliamentarian decision.
+    handoff:
+      next_receiver: navy-yard-parliamentarian
+      state: blocked
+      unresolved_question: Which controlling contract applies?
+      work_item_required: true
