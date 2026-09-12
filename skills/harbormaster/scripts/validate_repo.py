@@ -6,7 +6,7 @@ from __future__ import annotations
 import argparse
 import re
 import sys
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 
 import yaml
 
@@ -93,6 +93,24 @@ def load_yaml_from_text(text: str, errors: list[str]):
         return None
 
 
+def validate_agent_metadata(repo: Path, errors: list[str]) -> None:
+    metadata = load_yaml(repo / "skills/harbormaster/agents/openai.yaml", errors)
+    if not isinstance(metadata, dict):
+        errors.append("agents/openai.yaml must be a mapping")
+        return
+    interface = metadata.get("interface")
+    if not isinstance(interface, dict):
+        errors.append("agents/openai.yaml interface must be a mapping")
+        return
+    for field in ("display_name", "short_description", "default_prompt"):
+        value = interface.get(field)
+        if not isinstance(value, str) or not value.strip():
+            errors.append(f"agents/openai.yaml {field} must be a non-empty string")
+    prompt = interface.get("default_prompt")
+    if isinstance(prompt, str) and "$harbormaster" not in prompt:
+        errors.append("agents/openai.yaml default_prompt must invoke $harbormaster")
+
+
 def validate_schema(repo: Path, filename: str, errors: list[str]) -> None:
     path = repo / "skills/harbormaster/schemas" / filename
     value = load_yaml(path, errors)
@@ -129,6 +147,9 @@ def validate_manifest_path(package: Path, field: str, relative, errors: list[str
     if not isinstance(relative, str) or not relative.strip():
         errors.append(f"manifest {field} must contain a non-empty file path")
         return
+    if PureWindowsPath(relative).drive or "\\" in relative:
+        errors.append(f"manifest {field} must use a forward-slash package-relative path: {relative}")
+        return
     try:
         path = Path(relative)
         target = (package / path).resolve()
@@ -157,6 +178,7 @@ def main() -> int:
     package = repo / "skills/harbormaster"
     if (package / "SKILL.md").is_file():
         validate_skill(repo, errors)
+    validate_agent_metadata(repo, errors)
 
     role = load_yaml(repo / "roles/harbormaster.yaml", errors)
     if not isinstance(role, dict):

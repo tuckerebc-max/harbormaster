@@ -104,6 +104,65 @@ class ValidatorCommandTest(unittest.TestCase):
         self.write_yaml(self.manifest_path, {**self.manifest, "references": ["bad\0.md"]})
         self.assert_rejected("references")
 
+    def test_manifest_windows_path_syntax_is_rejected(self):
+        drive = self.package.drive or "C:"
+        for value in ("references\\routing-policy.md", drive + "SKILL.md"):
+            with self.subTest(value=value):
+                self.write_yaml(self.manifest_path, {**self.manifest, "references": [value]})
+                self.assert_rejected("references")
+
+    def test_manifest_dot_relative_target_is_accepted(self):
+        self.write_yaml(
+            self.manifest_path,
+            {**self.manifest, "references": ["./references/routing-policy.md"]},
+        )
+        result = self.run_validator()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertIn("PASS canonical Harbormaster layout", result.stdout)
+
+    def test_agent_metadata_document_must_be_mapping(self):
+        for value in (None, [], "not metadata"):
+            with self.subTest(value=value):
+                self.write_yaml(self.package / "agents/openai.yaml", value)
+                self.assert_rejected("agents/openai.yaml must be a mapping")
+
+    def test_agent_metadata_interface_must_be_mapping(self):
+        for value in (None, [], "not an interface"):
+            with self.subTest(value=value):
+                self.write_yaml(self.package / "agents/openai.yaml", {"interface": value})
+                self.assert_rejected("agents/openai.yaml interface must be a mapping")
+
+    def test_agent_metadata_required_fields_must_be_strings(self):
+        path = self.package / "agents/openai.yaml"
+        metadata = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for field in ("display_name", "short_description", "default_prompt"):
+            for value in (None, [], 7, "", " "):
+                with self.subTest(field=field, value=value):
+                    changed = {**metadata, "interface": {**metadata["interface"], field: value}}
+                    self.write_yaml(path, changed)
+                    self.assert_rejected(field)
+
+    def test_agent_metadata_required_fields_cannot_be_omitted(self):
+        path = self.package / "agents/openai.yaml"
+        metadata = yaml.safe_load(path.read_text(encoding="utf-8"))
+        for field in ("display_name", "short_description", "default_prompt"):
+            with self.subTest(field=field):
+                interface = dict(metadata["interface"])
+                del interface[field]
+                self.write_yaml(path, {**metadata, "interface": interface})
+                self.assert_rejected(field)
+
+    def test_agent_metadata_prompt_must_invoke_skill(self):
+        path = self.package / "agents/openai.yaml"
+        metadata = yaml.safe_load(path.read_text(encoding="utf-8"))
+        metadata["interface"]["default_prompt"] = "Route the pending work."
+        self.write_yaml(path, metadata)
+        self.assert_rejected("default_prompt must invoke $harbormaster")
+
+    def test_invalid_agent_yaml_is_reported(self):
+        (self.package / "agents/openai.yaml").write_text("interface: [", encoding="utf-8")
+        self.assert_rejected("invalid YAML")
+
 
 if __name__ == "__main__":
     unittest.main()
