@@ -1,0 +1,6 @@
+interface:
+  display_name: "Harbormaster"
+  short_description: "Route Navy Yard work with context and capacity"
+  default_prompt: "Use $harbormaster to preserve the Linear commitment, select the ready frontier, assemble context, query Fleet and ATS, assign a Bosun, and choose the next bounded action under Hermes or Codex ingress."
+policy:
+  allow_implicit_invocation: true

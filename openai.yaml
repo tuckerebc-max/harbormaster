@@ -1,7 +1,0 @@
-interface:
-  display_name: "Harbormaster"
-  short_description: "Route work across the Navy Yard"
-  default_prompt: "Use $harbormaster to route this work with the right context, capacity, and next action."
-
-policy:
-  allow_implicit_invocation: true
