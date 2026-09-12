@@ -40,6 +40,11 @@ principal, profile, actor, session, correlation, idempotency, task boundary,
 and permissions regardless of driver. Provider/model identity is evidence for
 resource fit, not an authority or lifecycle rule.
 
+For a proportionate request start, use
+[`references/request-intake.md`](references/request-intake.md). Route simple
+answers and bounded read-only inquiries without invoking the full route or the
+entire role family.
+
 ## Operating procedure
 
 1. **Observe.** Read authorized Linear commitments, active work, dependencies,

@@ -12,6 +12,7 @@ references:
   - references/monitoring-recovery.md
   - references/closeout-learning.md
   - references/github-exemplars.md
+  - references/request-intake.md
 schemas:
   - schemas/work-item.yaml
   - schemas/context-package.yaml
@@ -24,6 +25,7 @@ examples:
   - examples/context-package.yaml
   - examples/routing-decision.yaml
   - examples/chart-projection.yaml
+  - examples/request-intake.yaml
 activation:
   implicit: true
   exclusions:
